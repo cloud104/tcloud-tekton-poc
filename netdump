@@ -1,0 +1,32 @@
+            # limits:
+            #   cpu: 4000m # 1300m
+            #   memory: 5120Mi
+      #     volumeMounts:
+      #     - mountPath: /diag
+      #       name: diagvol
+      #   - name: monitor
+      #     image: mcr.microsoft.com/dotnet/monitor:8.0.0-ubuntu-chiseled-amd64
+      #     args: [ "collect", "--no-auth" ]
+      #     imagePullPolicy: Always
+      #     env:
+      #     - name: DOTNETMONITOR_DiagnosticPort__ConnectionMode
+      #       value: Listen
+      #     - name: DOTNETMONITOR_Storage__DefaultSharedPath
+      #       value: /diag
+      #     - name: DOTNETMONITOR_Urls
+      #       value: http://localhost:52323
+      #     - name: DOTNETMONITOR_Metrics__Endpoints
+      #       value: http://+:52325
+      #     volumeMounts:
+      #     - mountPath: /diag
+      #       name: diagvol
+      #     resources:
+      #       requests:
+      #         cpu: 50m
+      #         memory: 32Mi
+      #       limits:
+      #         cpu: 250m
+      #         memory: 256Mi
+      # volumes:
+      # - name: diagvol
+      #   emptyDir: {}

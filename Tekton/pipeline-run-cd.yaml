@@ -1,0 +1,30 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: pipelinerun-cd
+spec:
+  pipelineRef:
+    name: pipeline-cd
+  podTemplate:
+    securityContext:
+      fsGroup: 65532
+  params:
+    - name: repo-url
+      value: git@github.com:cloud104/tcloud-devops-kt-cluster.git
+    - name: revision
+      value: main
+  workspaces:
+  - name: ssh-creds
+    secret:
+      secretName: my-ssh-credentials
+  - name: cluster-credentials
+    secret: 
+      secretName: cluster-credentials
+  - name: source
+    volumeClaimTemplate:
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi

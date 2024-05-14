@@ -1,0 +1,30 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: pipelinerun-ci
+spec:
+  pipelineRef:
+    name: pipeline-ci
+  podTemplate:
+    securityContext:
+      fsGroup: 65532
+  params:
+    - name: repo-url
+      value: https://github.com/cloud104/tcloud-uptime-infra/tree/poc-tekton
+    - name: revision
+      value: main
+  workspaces:
+  - name: ssh-creds
+    secret:
+      secretName: my-ssh-credentials
+  - name: docker-creds
+    secret: 
+      secretName: config-docker
+  - name: source
+    volumeClaimTemplate:
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
