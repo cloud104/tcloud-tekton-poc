@@ -1,58 +1,44 @@
-#. aspnet-core\build\build-with-ng.ps1
+#!/bin/bash
 
-$execPath = Split-Path $($MyInvocation.MyCommand.Path) -Parent
+execPath=$(dirname "$0")
+aspnetCorePath="$execPath/aspnet-core"
 
-$aspnetCorePath = Join-Path $execPath "aspnet-core"
+declare -A projectsToBuild
 
-$projectsToBuild = @(
-    [PSCustomObject]@{
-        name      = "TCloudUptime.Migrator"        
-        folder    = "$($aspnetCorePath)\src\TCloudUptime.Migrator" 
-        imageName = "southamerica-east1-docker.pkg.dev/t-cloud-watch/tcloud-watch/tcloud-uptime-migrator"        
-    },
-    [PSCustomObject]@{
-        name      = "TCloudUptime.Web.Host"
-        folder    = "$($aspnetCorePath)\src\TCloudUptime.Web.Host" 
-        imageName = "southamerica-east1-docker.pkg.dev/t-cloud-watch/tcloud-watch/tcloud-uptime-webapi"
-    },
-    [PSCustomObject]@{
-        name      = "TCloudUptime.QueueWorker"
-        folder    = "$($aspnetCorePath)\src\TCloudUptime.QueueWorker" 
-        imageName = "southamerica-east1-docker.pkg.dev/t-cloud-watch/tcloud-watch/tcloud-uptime-queueworker"
-    },
-    [PSCustomObject]@{
-        name      = "TCloudUptime.AlertsManager"
-        folder    = "$($aspnetCorePath)\src\TCloudUptime.AlertsManager" 
-        imageName = "southamerica-east1-docker.pkg.dev/t-cloud-watch/tcloud-watch/tcloud-uptime-alertsmanager"
-    },
-    [PSCustomObject]@{
-        name      = "TCloudUptime.MonitorSchedulerWorker"
-        folder    = "$($aspnetCorePath)\src\TCloudUptime.MonitorSchedulerWorker" 
-        imageName = "southamerica-east1-docker.pkg.dev/t-cloud-watch/tcloud-watch/tcloud-uptime-monitorschedulerworker"
-    }
+projectsToBuild=(
+    ["TCloudUptime.Migrator_folder"]="$aspnetCorePath/src/TCloudUptime.Migrator"
+    ["TCloudUptime.Migrator_imageName"]="southamerica-east1-docker.pkg.dev/t-cloud-watch/tcloud-watch/tcloud-uptime-migrator"
+    ["TCloudUptime.Web.Host_folder"]="$aspnetCorePath/src/TCloudUptime.Web.Host"
+    ["TCloudUptime.Web.Host_imageName"]="southamerica-east1-docker.pkg.dev/t-cloud-watch/tcloud-watch/tcloud-uptime-webapi"
+    ["TCloudUptime.QueueWorker_folder"]="$aspnetCorePath/src/TCloudUptime.QueueWorker"
+    ["TCloudUptime.QueueWorker_imageName"]="southamerica-east1-docker.pkg.dev/t-cloud-watch/tcloud-watch/tcloud-uptime-queueworker"
+    ["TCloudUptime.AlertsManager_folder"]="$aspnetCorePath/src/TCloudUptime.AlertsManager"
+    ["TCloudUptime.AlertsManager_imageName"]="southamerica-east1-docker.pkg.dev/t-cloud-watch/tcloud-watch/tcloud-uptime-alertsmanager"
+    ["TCloudUptime.MonitorSchedulerWorker_folder"]="$aspnetCorePath/src/TCloudUptime.MonitorSchedulerWorker"
+    ["TCloudUptime.MonitorSchedulerWorker_imageName"]="southamerica-east1-docker.pkg.dev/t-cloud-watch/tcloud-watch/tcloud-uptime-monitorschedulerworker"
 )
 
-$createdbyLabel = "com.microsoft.created-by=visual-studio"
+createdbyLabel="com.microsoft.created-by=visual-studio"
 
-foreach ($project in $projectsToBuild) {
-    $productLabel = "com.microsoft.visual-studio.project-name=$($project.name)"
-    $projectDockerFile = "$($project.folder)\Dockerfile"
-    $projectImageName = $project.imageName
+for project in TCloudUptime.Migrator TCloudUptime.Web.Host TCloudUptime.QueueWorker TCloudUptime.AlertsManager TCloudUptime.MonitorSchedulerWorker; do
+    productLabel="com.microsoft.visual-studio.project-name=${project}"
+    projectFolder="${projectsToBuild[${project}_folder]}"
+    projectDockerFile="${projectFolder}/Dockerfile"
+    projectImageName="${projectsToBuild[${project}_imageName]}"
 
-    $imageSearch = $(& docker image ls $projectImageName --format "table {{.Repository}}")
-    $imageExists = $projectImageName -match $imageSearch[1]
+    # imageSearch=$(docker image ls "$projectImageName" --format "table {{.Repository}}")
+    imageSearch="southamerica-east1-docker.pkg.dev/t-cloud-watch/tcloud-watch/"
 
-    if ($imageExists) {
-        & docker rmi $project.imageName -f
-    }   
-    
-    & docker build -f $projectDockerFile --force-rm -t $projectImageName --label $createdbyLabel --label  $productLabel $aspnetCorePath
-}
+    if [[ $imageSearch =~ $projectImageName ]]; then
+        # docker rmi "$projectImageName" -f
+        buildah rmi -f "$projectImageName" 
+        echo "projectImageName"
+        echo $projectImageName
+    fi
+    echo "projectDockerFile"
+    echo $projectDockerFile
+    # buildah build -f "$projectDockerFile" --force-rm -t "$projectImageName" --label "$createdbyLabel" --label "$productLabel" "$projectFolder"
+    buildah bud -f "$projectDockerFile" -t "$projectImageName" --label "$createdbyLabel" --label "$productLabel" "$aspnetCorePath"
+done
 
-& docker image prune -f
-
-
-
-
-
-
+docker image prune -f
