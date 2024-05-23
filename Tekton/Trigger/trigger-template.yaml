@@ -1,0 +1,31 @@
+apiVersion: triggers.tekton.dev/v1beta1
+kind: TriggerTemplate
+metadata:
+  name: trigger-template
+spec:
+  params:
+  - name: repo-url
+  - name: revision
+    resourcetemplates:
+  - apiVersion: tekton.dev/v1beta1
+    kind: PipelineRun
+    metadata:
+      generateName: simple-pipeline-run-
+    spec:
+      pipelineRef:
+        name: pipeline-ci
+      params:
+      - name: repo-url
+        value: git@github.com:cloud104/tcloud-devops-kt-cluster.git
+        # value: $(tt.params.repo-url)
+      - name: revision
+        value: $(tt.params.revision)
+      workspaces:
+        - name: source
+          volumeClaimTemplate:
+            spec:
+              accessModes:
+              - ReadWriteOnce
+              resources:
+                requests:
+                  storage: 1Gi

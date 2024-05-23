@@ -1,0 +1,8 @@
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: EventListener
+metadata:
+  name: listener-interceptor
+spec:
+  serviceAccountName: tekton-triggers-sa
+  triggers:
+    - triggerRef: trigger-git-ci
