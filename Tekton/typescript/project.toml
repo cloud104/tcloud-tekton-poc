@@ -1,0 +1,10 @@
+[project]
+id = "typescript-ex"
+name = "TypeScript Example App"
+version = "0.0.3"
+
+[build]
+exclude = ["/README.md", "/Dockerfile"]
+
+[[build.buildpacks]]
+uri = "gcr.io/paketo-buildpacks/nodejs"
