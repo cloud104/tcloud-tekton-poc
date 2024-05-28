@@ -22,6 +22,12 @@ spec:
       - name: revision
         value: $(tt.params.revision)
       workspaces:
+      - name: ssh-creds
+        secret:
+          secretName: my-ssh-credentials
+      - name: docker-creds
+        secret: 
+          secretName: config-docker
       - name: source
         volumeClaimTemplate:
           spec:
