@@ -32,13 +32,9 @@ for project in TCloudUptime.Migrator TCloudUptime.Web.Host TCloudUptime.QueueWor
     if [[ $imageSearch =~ $projectImageName ]]; then
         # docker rmi "$projectImageName" -f
         buildah rmi -f "$projectImageName" 
-        echo "projectImageName"
-        echo $projectImageName
     fi
-    echo "projectDockerFile"
-    echo $projectDockerFile
     # buildah build -f "$projectDockerFile" --force-rm -t "$projectImageName" --label "$createdbyLabel" --label "$productLabel" "$projectFolder"
     buildah bud -f "$projectDockerFile" -t "$projectImageName" --label "$createdbyLabel" --label "$productLabel" "$aspnetCorePath"
 done
 
-docker image prune -f
+# buildah image prune -f
