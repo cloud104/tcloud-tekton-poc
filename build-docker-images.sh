@@ -37,4 +37,3 @@ for project in TCloudUptime.Migrator TCloudUptime.Web.Host TCloudUptime.QueueWor
     buildah bud -f "$projectDockerFile" -t "$projectImageName" --label "$createdbyLabel" --label "$productLabel" "$aspnetCorePath"
 done
 
-# buildah image prune -f
