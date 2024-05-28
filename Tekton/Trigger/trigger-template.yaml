@@ -6,6 +6,7 @@ spec:
   params:
   - name: repo-url
   - name: revision
+    default: poc-tekton
   resourcetemplates:
   - apiVersion: tekton.dev/v1beta1
     kind: PipelineRun

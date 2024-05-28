@@ -7,7 +7,7 @@ spec:
   - name: gitrevision
     value: $(body.pull_request.head.sha)
   - name: gitrepositoryurl
-    value: $(body.repository.clone_url)
+    value: $(body.repository.url)
   # - name: contenttype
   #   value: $(header.Content-Type)
   # - name: git-repo-name-pr
