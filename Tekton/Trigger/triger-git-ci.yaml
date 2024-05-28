@@ -14,8 +14,8 @@ spec:
           secretName: github-secret
           secretKey: secretToken
       - name: "eventTypes"
-        value: ["pull_request"]
+        value: ["pull_request", "push", "commit"]
   bindings:
-  - ref: trigger-binding
+    - ref: trigger-binding
   template:
     ref: trigger-template
