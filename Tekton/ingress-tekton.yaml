@@ -18,7 +18,7 @@ spec:
           service:
             name: el-listener-interceptor
             port: 
-              number: 8080
+              name: http-listener
   tls:
   - hosts:
     - webhook-tekton.cluster-teste.tcloud-devops.cloudtotvs.com.br
