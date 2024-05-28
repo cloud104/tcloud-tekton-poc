@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tekton-app-poc
+  labels:
+    name: tekton-app-poc
+spec:
+  containers:
+  - name: tekton-app-poc
+    image: ssoviedo/teste-tekton:1.0
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tekton-app-poc
+spec:
+  selector:
+    app: tekton-app-poc
+  ports:
+  - port: 8080
+    targetPort: 8080

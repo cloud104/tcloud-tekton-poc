@@ -26,4 +26,4 @@ spec:
         apk update
         apk add kubectl
         kubectl get pods
-        kubectl apply -f teste-tekton/tekton.yaml
+        kubectl apply -f tekton-pod.yaml
