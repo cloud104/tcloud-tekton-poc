@@ -1,6 +1,7 @@
 apiVersion: triggers.tekton.dev/v1beta1
 kind: TriggerBinding
 metadata:
+  namespace: tekton
   name: trigger-binding
 spec:
   params:

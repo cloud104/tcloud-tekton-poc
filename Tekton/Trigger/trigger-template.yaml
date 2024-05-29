@@ -1,6 +1,7 @@
 apiVersion: triggers.tekton.dev/v1beta1
 kind: TriggerTemplate
 metadata:
+  namespace: tekton
   name: trigger-template
 spec:
   params:

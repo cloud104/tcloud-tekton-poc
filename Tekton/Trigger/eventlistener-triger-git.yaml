@@ -1,6 +1,7 @@
 apiVersion: triggers.tekton.dev/v1alpha1
 kind: EventListener
 metadata:
+  namespace: tekton
   name: listener-interceptor
 spec:
   serviceAccountName: tekton-triggers-sa
