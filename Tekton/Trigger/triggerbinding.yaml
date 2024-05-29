@@ -5,7 +5,7 @@ metadata:
   name: trigger-binding
 spec:
   params:
-  - name: gitrevision
+  - name: revision
     value: ""
-  - name: gitrepositoryurl
+  - name: repo-url
     value: $(body.repository.url)

@@ -8,7 +8,14 @@ Segue os próximos passos
 
 kubectl apply --filename https://storage.googleapis.com/tekton-releases/dashboard/latest/release.yaml
 
-3- Instalar o Git Clone no Cluster
+3- Instalar Tekton Triggers (PARA CLUSTERS DE VERSÂO 1.25 do K8S) (https://tekton.dev/docs/triggers/install/)
+
+kubectl apply --filename \
+https://storage.googleapis.com/tekton-releases/triggers/previous/v0.26.2/release.yaml
+kubectl apply --filename \
+https://storage.googleapis.com/tekton-releases/triggers/previous/v0.26.2/interceptors.yaml
+
+4- Instalar o Git Clone no Cluster
 kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/main/task/git-clone/0.7/git-clone.yaml -n tekton
 
 
@@ -17,6 +24,10 @@ kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/main/task/gi
 kubectl patch storageclass standard -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
 
 kubectl patch storageclass gold -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+
+
+
+
 
 
 Depois de subir o código no github eu mudo para a branch main, atualizo ela e rodo aquele script que gera as imagens
