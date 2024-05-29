@@ -9,7 +9,7 @@ Segue os próximos passos
 kubectl apply --filename https://storage.googleapis.com/tekton-releases/dashboard/latest/release.yaml
 
 3- Instalar o Git Clone no Cluster
-kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/main/task/git-clone/0.7/git-clone.yaml
+kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/main/task/git-clone/0.7/git-clone.yaml -n tekton
 
 
 ** Comando para alteração do storageclass **

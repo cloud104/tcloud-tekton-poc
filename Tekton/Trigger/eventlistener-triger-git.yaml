@@ -5,8 +5,4 @@ metadata:
 spec:
   serviceAccountName: tekton-triggers-sa
   triggers:
-    - triggerRef: trigger-git-ci
-  # resources:
-  #   kubernetesResource:
-  #     serviceType: LoadBalancer
-  #     serviceLoadBalancerClass: nginx
+    - triggerRef: interceptor-git-ci

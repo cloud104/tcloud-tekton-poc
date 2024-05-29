@@ -1,7 +1,7 @@
 apiVersion: triggers.tekton.dev/v1beta1
 kind: Trigger
 metadata:
-  name: trigger-git-ci
+  name: interceptor-git-ci
 spec:
   interceptors:
     - ref:

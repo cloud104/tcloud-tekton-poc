@@ -6,7 +6,7 @@ spec:
   params:
   - name: repo-url
   - name: revision
-    default: poc-tekton
+    default: feat/tekton-poc
   resourcetemplates:
   - apiVersion: tekton.dev/v1beta1
     kind: PipelineRun
@@ -17,7 +17,6 @@ spec:
         name: pipeline-ci
       params:
       - name: repo-url
-        # value: git@github.com:cloud104/tcloud-devops-kt-cluster.git
         value: $(tt.params.repo-url)
       - name: revision
         value: $(tt.params.revision)

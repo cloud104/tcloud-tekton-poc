@@ -8,11 +8,3 @@ spec:
     value: ""
   - name: gitrepositoryurl
     value: $(body.repository.url)
-  # - name: contenttype
-  #   value: $(header.Content-Type)
-  # - name: git-repo-name-pr
-  #   value: $(body.pullRequest.fromRef.repository.name)
-  # - name: git-repo-url-pr
-  #   value: ssh://git@github.com:cloud104/tcloud-devops-kt-cluster.git/$(body.pullRequest.fromRef.repository.project.key)/$(body.pullRequest.fromRef.repository.name).git
-  # - name: git-revision-pr
-  #   value: $(body.pullRequest.fromRef.displayId)
