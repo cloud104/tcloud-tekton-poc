@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: tekton-pipelines
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    external-dns.alpha.kubernetes.io/hostname: dashboard-tekton.cluster-teste.tcloud-devops.cloudtotvs.com.br.
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/auth-type: "basic"
+    nginx.ingress.kubernetes.io/auth-secret: "tekton-passwd"
+    nginx.ingress.kubernetes.io/auth-realm: "Autenticação Necessaria"
+  name: dashboard-tekton
+spec:
+  rules:
+  - host: dashboard-tekton.cluster-teste.tcloud-devops.cloudtotvs.com.br
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: tekton-dashboard
+            port: 
+              number: 9097
+              # name: http-listener
+  tls:
+  - hosts:
+    - "dashboard-tekton.cluster-teste.tcloud-devops.cloudtotvs.com.br"
+    secretName: tekton-passwd
