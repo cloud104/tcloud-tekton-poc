@@ -8,4 +8,4 @@ spec:
   - name: revision
     value: ""
   - name: repo-url
-    value: $(body.repository.url)
+    value: $(body.repository.ssh_url)

@@ -25,7 +25,7 @@ spec:
       script: |
         #!/bin/bash
         
-        execPath=$(dirname "$0")
+        execPath=$(pwd)
         aspnetCorePath="$execPath/aspnet-core"
 
         declare -A projectsToBuild
